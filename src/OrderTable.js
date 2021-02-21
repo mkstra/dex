@@ -101,7 +101,7 @@ export default function DataTable() {
                 
             :<DataGrid
             onRowSelected={({ data }) => setSelection(data)}
-            rows={rows.filter(({ orderType }) => buy ? orderType == "buy" : orderType == "sell")} columns={columns} pageSize={5} />
+            rows={rows.filter(({ orderType }) => buy ? orderType == "sell" : orderType == "buy")} columns={columns} pageSize={5} />
             
             
             }
