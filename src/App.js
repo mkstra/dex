@@ -12,11 +12,11 @@ function App() {
   return (
     <Fragment>
 
-    
+{/*     
     <div style={centered}>
       <OrderForm />
 
-    </div>
+    </div> */}
       <div style={centered}>
       <OrderTable />
 
