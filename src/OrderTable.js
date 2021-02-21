@@ -50,75 +50,79 @@ export default function DataTable() {
     const [rowData, setRowData] = useState(rows)
     return (
         <div style={{ height: 400, width: '100%' }}>
-                <Select
-                    native
-                    defaultValue={buy ? "BUY" : "SELL"}
-                    onChange={event => {
-                        setBuy(event.target.value == "buy");
-                    }
-                    }
-                //   inputProps={{
-                //     name: 'age',
-                //     id: 'age-native-simple',
-                //   }}
-                >
-                    <option value={"buy"}>BUY</option>
-                    <option value={"sell"}>SELL</option>
-                </Select>
-                {" VEO for BTC from "}
-                {/* OrderBook or create  */}
+            <Select
+                native
+                defaultValue={buy ? "BUY" : "SELL"}
+                onChange={event => {
+                    setBuy(event.target.value == "buy");
+                }
+                }
+            //   inputProps={{
+            //     name: 'age',
+            //     id: 'age-native-simple',
+            //   }}
+            >
+                <option value={"buy"}>BUY</option>
+                <option value={"sell"}>SELL</option>
+            </Select>
+            {" VEO for BTC (at Market) from "}
+            {/* OrderBook or create  */}
 
-                <Select
-                    native
-                    defaultValue={createOrder ? "New Order" : "Order Book"}
-                    onChange={event => {
-                        setCreateOrder(event.target.value == "2");
-                    }
-                    }
-                //   inputProps={{
-                //     name: 'age',
-                //     id: 'age-native-simple',
-                //   }}
-                >
-                    <option value={"1"}>Order Book</option>
-                    <option value={"2"}>New Order</option>
-                </Select>
+            <Select
+                native
+                defaultValue={createOrder ? "New Order" : "Order Book"}
+                onChange={event => {
+                    setCreateOrder(event.target.value == "2");
+                }
+                }
+            //   inputProps={{
+            //     name: 'age',
+            //     id: 'age-native-simple',
+            //   }}
+            >
+                <option value={"1"}>Order Book</option>
+                <option value={"2"}>New Order</option>
+            </Select>
 
-                {/* <Button variant="contained" color={createOrder ? "default" : "primary"} onClick={() => setCreateOrder(true)}>
-                    existing orders
-                </Button>
+            {/* 
                     {" or "}
                 <Button variant="contained" color={createOrder ? "primary" : "default"} onClick={() => setCreateOrder(true)}>
                     new order
                 </Button> */}
-                {createOrder ? <div>
-                    <OrderForm />
-                    {/* <Button color="default" onClick={() => setCreateOrder(false)}>
+            {createOrder ? <div>
+                <OrderForm buy={buy} pair={pairOne} />
+                {/* <Button color="default" onClick={() => setCreateOrder(false)}>
                         Close
                         </Button> */}
 
-                </div>
-                
-            :<DataGrid
-            onRowSelected={({ data }) => setSelection(data)}
-            rows={rows.filter(({ orderType }) => buy ? orderType == "sell" : orderType == "buy")} columns={columns} pageSize={5} />
-            
-            
-            }
-            {selection &&
-             <div>
-             {selection.orderType.toUpperCase()} {selection.amount} {selection.pair.split("/")[0]} for {selection.pair.split("/")[1]}
-             
-             </div>
-        
-            }
-            
-
-
-               
-                
-
             </div>
+
+                :
+
+                <DataGrid
+                    onRowSelected={({ data }) => setSelection(data)}
+                    rows={rows.filter(({ orderType }) => buy ? orderType == "sell" : orderType == "buy")} columns={columns} pageSize={5} />
+
+
+            }
+            {(selection && !createOrder) &&
+
+                <div class="boldend">
+                     
+                    <Button variant="contained" color={"default"} onClick={() => alert("ToDO: actual backend")}>
+                    {"Match "} {buy ? "SELL": "BUY"} 
+                </Button>  
+                {" order for "} {selection.amount} {selection.pair.split("/")[0]}
+                </div>
+            }
+
+
+
+
+
+
+
+        </div>
     );
 }
 
