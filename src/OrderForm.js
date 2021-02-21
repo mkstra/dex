@@ -18,10 +18,14 @@ import * as Yup from 'yup';
 
 const getExchangePrice = async () => await fetch("https://api.qtrade.io/v1/tickers").then(res=> res.text()).then(res => JSON.parse(res).data.markets.map(({last, last_change, id_hr}) => ({last, last_change, id_hr}))) 
 
+const errorDiv = (errors, touched, key) => errors[key] && touched[key] ? (
+        <div>{errors[key]}</div>
+       ) : null 
+
 class OrderForm extends React.Component {
   render() {
     return (
-      <div style={{padding: 20 + "vw"}}>
+      <div >
         <h1>Buy Amoveo</h1>
         <div>...fully decentralized without having to trust any Exchange or opening an account</div>
         <Formik
@@ -39,10 +43,7 @@ class OrderForm extends React.Component {
             {({ errors, touched }) => (
                  <Form>
                  <Field name="veo" label="Amount of VEO you want to buy [0.1min, 10max] - for now" component={TextField} />
-                 {errors.veo && touched.veo ? (
-             <div>{errors.veo}</div>
-            ) : null}
-
+                 {errorDiv(errors, touched, "veo")}
                  <Field name="email" label="We notify you once the trade is live on the AMOVEO network"
                  component={TextField}/>
                   {errors.email && touched.email ? (
